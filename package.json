@@ -143,7 +143,7 @@
     "react-native-macos": "local-cli/wrong-react-native.js"
   },
   "peerDependencies": {
-    "react": "16.2.0"
+    "react": "^16.2.0"
   },
   "dependencies": {
     "absolute-path": "^0.0.0",
