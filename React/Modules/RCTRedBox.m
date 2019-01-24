@@ -53,6 +53,7 @@ const CGFloat buttonMargin = 10;
 @protocol RCTRedBoxWindowActionDelegate <NSObject>
 
 - (void)redBoxWindow:(RCTRedBoxWindow *)redBoxWindow openStackFrameInEditor:(RCTJSStackFrame *)stackFrame;
+- (void)dismissRedBoxWindow:(RCTRedBoxWindow *)redBoxWindow;
 - (void)reloadFromRedBoxWindow:(RCTRedBoxWindow *)redBoxWindow;
 - (void)loadExtraDataViewController;
 
@@ -172,19 +173,17 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
 
 - (void)dismiss
 {
-  [self resignFirstResponder];
-  [[[NSApplication sharedApplication] mainWindow] makeKeyWindow];
-  [self orderOut:nil];
+  [_actionDelegate dismissRedBoxWindow:self];
 }
 
 - (void)reload
 {
-    [_actionDelegate reloadFromRedBoxWindow:self];
+  [_actionDelegate reloadFromRedBoxWindow:self];
 }
 
 - (void)showExtraDataViewController
 {
-    [_actionDelegate loadExtraDataViewController];
+  [_actionDelegate loadExtraDataViewController];
 }
 
 - (void)copyStack
@@ -454,6 +453,7 @@ RCT_EXPORT_MODULE()
           NSRect contentRect = (CGRect){NSZeroPoint, {screenSize.width / 3, screenSize.height / 1.5}};
 
           self->_window = [[RCTRedBoxWindow alloc] initWithContentRect:contentRect];
+          self->_window.releasedWhenClosed = NO;
           self->_window.actionDelegate = self;
           [self->_window center];
         }
@@ -485,8 +485,13 @@ RCT_EXPORT_METHOD(setExtraData:(NSDictionary *)extraData forIdentifier:(__unused
 RCT_EXPORT_METHOD(dismiss)
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self->_window dismiss];
+        [self->_window close];
     });
+}
+
+- (void)dismissRedBoxWindow:(__unused RCTRedBoxWindow *)redBoxWindow
+{
+    [self dismiss];
 }
 
 - (void)invalidate
