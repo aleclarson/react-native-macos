@@ -171,6 +171,11 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
   }
 }
 
+- (BOOL)canBecomeMainWindow
+{
+  return NO;
+}
+
 - (void)dismiss
 {
   [_actionDelegate dismissRedBoxWindow:self];
