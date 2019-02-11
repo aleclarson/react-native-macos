@@ -52,7 +52,7 @@
 
 - (void)setPlaceholder:(NSString *)placeholder
 {
-  [super setPlaceholder:placeholder];
+  _placeholder = placeholder;
   [self _updatePlaceholder];
 }
 
@@ -73,8 +73,8 @@
     [attributes setObject:_placeholderColor forKey:NSForegroundColorAttributeName];
   }
 
-  self.attributedPlaceholder = [[NSAttributedString alloc] initWithString:self.placeholder
-                                                               attributes:attributes];
+  self.placeholderAttributedString = [[NSAttributedString alloc] initWithString:self.placeholder
+                                                                     attributes:attributes];
 }
 
 #pragma mark - Caret Manipulation
