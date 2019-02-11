@@ -37,7 +37,7 @@ static NSColor *defaultPlaceholderColor()
   if (self = [super initWithFrame:frame]) {
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(textDidChange)
-                                                 name:UITextViewTextDidChangeNotification
+                                                 name:NSControlTextDidChangeNotification
                                                object:self];
 
     _placeholderView = [[UILabel alloc] initWithFrame:self.bounds];

@@ -23,7 +23,7 @@
   if (self = [super initWithFrame:frame]) {
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(_textDidChange)
-                                                 name:UITextFieldTextDidChangeNotification
+                                                 name:NSControlTextDidChangeNotification
                                                object:self];
 
     _textInputDelegateAdapter = [[RCTBackedTextFieldDelegateAdapter alloc] initWithTextField:self];
