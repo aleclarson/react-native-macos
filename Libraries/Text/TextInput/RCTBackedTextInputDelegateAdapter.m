@@ -19,7 +19,7 @@ static void *TextFieldSelectionObservingContext = &TextFieldSelectionObservingCo
 @implementation RCTBackedTextFieldDelegateAdapter {
   __weak UITextField<RCTBackedTextInputViewProtocol> *_backedTextInputView;
   BOOL _textDidChangeIsComing;
-  UITextRange *_previousSelectedTextRange;
+  NSRange _previousSelectedTextRange;
 }
 
 - (instancetype)initWithTextField:(UITextField<RCTBackedTextInputViewProtocol> *)backedTextInputView
@@ -112,7 +112,7 @@ static void *TextFieldSelectionObservingContext = &TextFieldSelectionObservingCo
 
 #pragma mark - Public Interface
 
-- (void)skipNextTextInputDidChangeSelectionEventWithTextRange:(UITextRange *)textRange
+- (void)skipNextTextInputDidChangeSelectionEventWithTextRange:(NSRange)textRange
 {
   _previousSelectedTextRange = textRange;
 }
