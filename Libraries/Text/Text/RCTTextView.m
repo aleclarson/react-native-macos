@@ -247,22 +247,8 @@
 - (void)copy:(id)sender
 {
 #if !TARGET_OS_TV
-  NSAttributedString *attributedText = _textStorage;
-
-  NSMutableDictionary *item = [NSMutableDictionary new];
-
-  NSData *rtf = [attributedText dataFromRange:NSMakeRange(0, attributedText.length)
-                           documentAttributes:@{NSDocumentTypeDocumentAttribute: NSRTFDTextDocumentType}
-                                        error:nil];
-
-  if (rtf) {
-    [item setObject:rtf forKey:(id)kUTTypeFlatRTFD];
-  }
-
-  [item setObject:attributedText.string forKey:(id)kUTTypeUTF8PlainText];
-
-  UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-  pasteboard.items = @[item];
+  NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
+  [pasteboard clearContents]; [pasteboard writeObjects:@[_textStorage]];
 #endif
 }
 
