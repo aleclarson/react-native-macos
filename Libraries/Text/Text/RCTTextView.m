@@ -12,7 +12,7 @@
 #import <MobileCoreServices/UTCoreTypes.h>
 
 #import <React/RCTUtils.h>
-#import <React/UIView+React.h>
+#import <React/NSView+React.h>
 
 #import "RCTTextShadowView.h"
 
@@ -21,7 +21,7 @@
   CAShapeLayer *_highlightLayer;
   UILongPressGestureRecognizer *_longPressGestureRecognizer;
 
-  NSArray<UIView *> *_Nullable _descendantViews;
+  NSArray<NSView *> *_Nullable _descendantViews;
   NSTextStorage *_Nullable _textStorage;
   CGRect _contentFrame;
 }
@@ -77,19 +77,19 @@
 
 - (void)setTextStorage:(NSTextStorage *)textStorage
           contentFrame:(CGRect)contentFrame
-       descendantViews:(NSArray<UIView *> *)descendantViews
+       descendantViews:(NSArray<NSView *> *)descendantViews
 {
   _textStorage = textStorage;
   _contentFrame = contentFrame;
 
   // FIXME: Optimize this.
-  for (UIView *view in _descendantViews) {
+  for (NSView *view in _descendantViews) {
     [view removeFromSuperview];
   }
 
   _descendantViews = descendantViews;
 
-  for (UIView *view in descendantViews) {
+  for (NSView *view in descendantViews) {
     [self addSubview:view];
   }
 
@@ -140,7 +140,7 @@
   if (highlightPath) {
     if (!_highlightLayer) {
       _highlightLayer = [CAShapeLayer layer];
-      _highlightLayer.fillColor = [UIColor colorWithWhite:0 alpha:0.25].CGColor;
+      _highlightLayer.fillColor = [NSColor colorWithWhite:0 alpha:0.25].CGColor;
       [self.layer addSublayer:_highlightLayer];
     }
     _highlightLayer.position = _contentFrame.origin;

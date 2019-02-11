@@ -10,7 +10,7 @@
 #import "RCTUITextField.h"
 
 #import <React/RCTUtils.h>
-#import <React/UIView+React.h>
+#import <React/NSView+React.h>
 
 #import "RCTBackedTextInputDelegateAdapter.h"
 
@@ -44,7 +44,7 @@
 
 #pragma mark - Properties
 
-- (void)setTextContainerInset:(UIEdgeInsets)textContainerInset
+- (void)setTextContainerInset:(NSEdgeInsets)textContainerInset
 {
   _textContainerInset = textContainerInset;
   [self setNeedsLayout];
@@ -56,7 +56,7 @@
   [self _updatePlaceholder];
 }
 
-- (void)setPlaceholderColor:(UIColor *)placeholderColor
+- (void)setPlaceholderColor:(NSColor *)placeholderColor
 {
   _placeholderColor = placeholderColor;
   [self _updatePlaceholder];
@@ -102,7 +102,7 @@
 
 - (CGRect)textRectForBounds:(CGRect)bounds
 {
-  return UIEdgeInsetsInsetRect([super textRectForBounds:bounds], _textContainerInset);
+  return NSEdgeInsetsInsetRect([super textRectForBounds:bounds], _textContainerInset);
 }
 
 - (CGRect)editingRectForBounds:(CGRect)bounds

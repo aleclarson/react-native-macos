@@ -120,7 +120,7 @@ typedef NS_OPTIONS(NSInteger, RCTTextSizeComparisonOptions) {
                    inRange:(NSRange){0, self.length}
                    options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired
                 usingBlock:
-    ^(UIFont *_Nullable font, NSRange range, BOOL *_Nonnull stop) {
+    ^(NSFont *_Nullable font, NSRange range, BOOL *_Nonnull stop) {
       if (!font) {
         return;
       }
