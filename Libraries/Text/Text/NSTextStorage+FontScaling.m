@@ -128,7 +128,7 @@ typedef NS_OPTIONS(NSInteger, RCTTextSizeComparisonOptions) {
       CGFloat fontSize = MAX(MIN(font.pointSize * ratio, maximumFontSize), minimumFontSize);
 
       [self addAttribute:NSFontAttributeName
-                   value:[font fontWithSize:fontSize]
+                   value:[NSFont fontWithDescriptor:font.fontDescriptor size:fontSize]
                    range:range];
     }
   ];
