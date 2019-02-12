@@ -94,7 +94,7 @@
     [self addSubview:view];
   }
 
-  [self setNeedsDisplay];
+  [self setNeedsDisplay:YES];
 }
 
 - (void)drawRect:(CGRect)rect
