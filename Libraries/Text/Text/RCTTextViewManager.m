@@ -9,7 +9,7 @@
 
 #import "RCTTextViewManager.h"
 
-#import <React/RCTAccessibilityManager.h>
+//#import <React/RCTAccessibilityManager.h>
 #import <React/RCTShadowView+Layout.h>
 #import <React/RCTShadowView.h>
 #import <React/RCTUIManager.h>
