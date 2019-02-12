@@ -32,7 +32,7 @@
   if (self = [super initWithFrame:frame]) {
     self.isAccessibilityElement = YES;
     self.accessibilityTraits |= UIAccessibilityTraitStaticText;
-    self.opaque = NO;
+    RCTAssert(self.opaque == NO, @"RCTTextView must not be opaque");
     self.contentMode = UIViewContentModeRedraw;
   }
   return self;
