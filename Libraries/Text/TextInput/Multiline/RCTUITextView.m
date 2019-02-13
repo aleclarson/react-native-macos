@@ -271,3 +271,19 @@ static NSColor *defaultPlaceholderColor()
 }
 
 @end
+
+@implementation NSTextView (EditingControl)
+
+- (BOOL)endEditing:(BOOL)force
+{
+  if (self != self.window.firstResponder) {
+    return YES;
+  }
+  if (force || [self.delegate textShouldEndEditing:self]) {
+    [self.window makeFirstResponder:nil];
+    return YES;
+  }
+  return NO;
+}
+
+@end
