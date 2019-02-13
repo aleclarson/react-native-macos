@@ -9,7 +9,7 @@
 
 #import "NSView+React.h"
 #import <AppKit/AppKit.h>
-#import <Foundation/Foundation.h>
+#import <QuartzCore/CoreAnimation.h>
 
 #import <objc/runtime.h>
 
