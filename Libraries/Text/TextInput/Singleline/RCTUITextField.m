@@ -102,6 +102,10 @@
 
 #pragma mark - Overrides
 
+- (NSRange)selectedTextRange {
+  return self.currentEditor.selectedRange;
+}
+
 - (void)setSelectedTextRange:(NSRange)selectedTextRange
 {
   // Always use "setSelectedTextRange:notifyDelegate:" instead

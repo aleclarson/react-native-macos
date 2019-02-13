@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, nullable) NSString *placeholder;
 @property (nonatomic, strong, nullable) NSColor *placeholderColor;
 @property (nonatomic, assign) NSEdgeInsets paddingInsets;
-@property (nonatomic, strong, nullable) NSFont *font;
+@property (atomic, strong, nullable) NSFont *font;
 
 @end
 
