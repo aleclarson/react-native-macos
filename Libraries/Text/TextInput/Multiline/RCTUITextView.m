@@ -151,8 +151,7 @@ static NSColor *defaultPlaceholderColor()
     // so the adapter must not generate a notification for it.
     [_textInputDelegateAdapter skipNextTextInputDidChangeSelectionEventWithTextRange:selectedTextRange];
   }
-  self.currentEditor.selectedRange = selectedTextRange;
-  [_textInputDelegateAdapter selectedTextRangeWasSet];
+  [super setSelectedRange:selectedTextRange];
 }
 
 - (void)paste:(id)sender
