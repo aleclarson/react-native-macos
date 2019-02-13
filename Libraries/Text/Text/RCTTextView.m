@@ -173,9 +173,9 @@
   return reactTag;
 }
 
-- (void)didMoveToWindow
+- (void)viewDidMoveToWindow
 {
-  [super didMoveToWindow];
+  [super viewDidMoveToWindow];
 
   if (!self.window) {
     self.layer.contents = nil;
