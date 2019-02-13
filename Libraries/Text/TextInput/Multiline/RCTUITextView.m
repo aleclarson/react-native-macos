@@ -13,10 +13,11 @@
 #import <React/NSView+React.h>
 
 #import "RCTBackedTextInputDelegateAdapter.h"
+#import "NSLabel.h"
 
 @implementation RCTUITextView
 {
-  UILabel *_placeholderView;
+  NSLabel *_placeholderView;
 
   RCTBackedTextViewDelegateAdapter *_textInputDelegateAdapter;
 }
@@ -40,9 +41,8 @@ static NSColor *defaultPlaceholderColor()
                                                  name:NSControlTextDidChangeNotification
                                                object:self];
 
-    _placeholderView = [[UILabel alloc] initWithFrame:self.bounds];
+    _placeholderView = [[NSLabel alloc] initWithFrame:self.bounds];
 //    _placeholderView.isAccessibilityElement = NO;
-    _placeholderView.numberOfLines = 0;
     _placeholderView.textColor = defaultPlaceholderColor();
     [self addSubview:_placeholderView];
 
@@ -81,7 +81,7 @@ static NSColor *defaultPlaceholderColor()
 - (void)setPlaceholder:(NSString *)placeholder
 {
   _placeholder = placeholder;
-  _placeholderView.text = _placeholder;
+  _placeholderView.stringValue = _placeholder;
 }
 
 - (void)setPlaceholderColor:(NSColor *)placeholderColor
@@ -107,7 +107,7 @@ static NSColor *defaultPlaceholderColor()
 - (void)setTextAlignment:(NSTextAlignment)textAlignment
 {
   [super setTextAlignment:textAlignment];
-  _placeholderView.textAlignment = textAlignment;
+  _placeholderView.alignment = textAlignment;
 }
 
 - (void)setText:(NSString *)text

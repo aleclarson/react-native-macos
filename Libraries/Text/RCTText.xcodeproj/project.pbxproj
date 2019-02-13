@@ -239,12 +239,16 @@
 		705EDE3C221378CC000CAA67 /* NSFont+LineHeight.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSFont+LineHeight.m"; sourceTree = "<group>"; };
 		705EDE3E22137BE7000CAA67 /* NSValue+CoreGraphics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSValue+CoreGraphics.h"; sourceTree = "<group>"; };
 		705EDE3F22137BE7000CAA67 /* NSValue+CoreGraphics.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSValue+CoreGraphics.m"; sourceTree = "<group>"; };
+		705EDE422213890E000CAA67 /* NSLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSLabel.m; sourceTree = "<group>"; };
+		705EDE4422138919000CAA67 /* NSLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSLabel.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
 		58B511921A9E6C1200147676 = {
 			isa = PBXGroup;
 			children = (
+				705EDE4422138919000CAA67 /* NSLabel.h */,
+				705EDE422213890E000CAA67 /* NSLabel.m */,
 				705EDE3E22137BE7000CAA67 /* NSValue+CoreGraphics.h */,
 				705EDE3F22137BE7000CAA67 /* NSValue+CoreGraphics.m */,
 				705EDE3B221378CC000CAA67 /* NSFont+LineHeight.h */,
@@ -482,6 +486,7 @@
 				5956B131200FEBAA008D9D16 /* RCTRawTextViewManager.m in Sources */,
 				5956B137200FEBAA008D9D16 /* RCTBaseTextInputShadowView.m in Sources */,
 				5956B146200FEBAA008D9D16 /* RCTConvert+Text.m in Sources */,
+				705EDE432213890E000CAA67 /* NSLabel.m in Sources */,
 				5956B13F200FEBAA008D9D16 /* RCTTextAttributes.m in Sources */,
 				5956B143200FEBAA008D9D16 /* RCTTextView.m in Sources */,
 				5956B13C200FEBAA008D9D16 /* RCTUITextView.m in Sources */,
