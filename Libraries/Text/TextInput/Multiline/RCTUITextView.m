@@ -104,21 +104,36 @@ static NSColor *defaultPlaceholderColor()
   _placeholderView.font = font ?: defaultPlaceholderFont();
 }
 
+- (NSTextAlignment)textAlignment
+{
+  return self.alignment;
+}
+
 - (void)setTextAlignment:(NSTextAlignment)textAlignment
 {
-  [super setTextAlignment:textAlignment];
+  [self setAlignment:textAlignment];
   _placeholderView.alignment = textAlignment;
+}
+
+- (NSString *)text
+{
+  return self.string;
 }
 
 - (void)setText:(NSString *)text
 {
-  [super setText:text];
+  [self setString:text];
   [self textDidChange];
+}
+
+- (NSAttributedString *)attributedText
+{
+  return self.textStorage;
 }
 
 - (void)setAttributedText:(NSAttributedString *)attributedText
 {
-  [super setAttributedText:attributedText];
+  [self.textStorage setAttributedString:attributedText];
   [self textDidChange];
 }
 
