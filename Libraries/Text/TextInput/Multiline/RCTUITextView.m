@@ -94,6 +94,7 @@ static NSColor *defaultPlaceholderColor()
 {
   _textWasPasted = NO;
   [self invalidatePlaceholderVisibility];
+  [self invalidateIntrinsicContentSize];
 }
 
 #pragma mark - Overrides
@@ -189,7 +190,7 @@ static NSColor *defaultPlaceholderColor()
 
 - (CGSize)contentSize
 {
-  CGSize contentSize = super.contentSize;
+  CGSize contentSize = self.intrinsicContentSize;
   CGSize placeholderSize = self.placeholderSize;
   // When a text input is empty, it actually displays a placehoder.
   // So, we have to consider `placeholderSize` as a minimum `contentSize`.
