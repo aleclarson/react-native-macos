@@ -152,4 +152,36 @@
   return CGSizeMake(MIN(size.width, intrinsicSize.width), MIN(size.height, intrinsicSize.height));
 }
 
+#pragma mark - RCTBackedTextInputViewProtocol
+
+- (NSString *)text
+{
+  return self.stringValue;
+}
+
+- (void)setText:(NSString *)text
+{
+  self.stringValue = text;
+}
+
+- (NSAttributedString *)attributedText
+{
+  return self.attributedStringValue;
+}
+
+- (void)setAttributedText:(NSAttributedString *)attributedText
+{
+  self.attributedStringValue = attributedText;
+}
+
+- (NSTextAlignment)textAlignment
+{
+  return self.alignment;
+}
+
+- (void)setTextAlignment:(NSTextAlignment)textAlignment
+{
+  self.alignment = textAlignment;
+}
+
 @end
