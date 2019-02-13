@@ -25,7 +25,7 @@
     self.blurOnSubmit = NO;
 
     _backedTextInputView = [[RCTUITextView alloc] initWithFrame:self.bounds];
-    _backedTextInputView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    _backedTextInputView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
     _backedTextInputView.backgroundColor = [NSColor clearColor];
     _backedTextInputView.textColor = [NSColor blackColor];
     // This line actually removes 5pt (default value) left and right padding in UITextView.
