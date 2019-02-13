@@ -173,12 +173,12 @@ static NSColor *defaultPlaceholderColor()
 
 - (CGSize)placeholderSize
 {
-  NSEdgeInsets textContainerInset = self.textContainerInset;
+  NSEdgeInsets padding = _paddingInsets;
   NSString *placeholder = self.placeholder ?: @"";
   CGSize placeholderSize = [placeholder sizeWithAttributes:@{NSFontAttributeName: self.font ?: defaultPlaceholderFont()}];
   placeholderSize = CGSizeMake(RCTCeilPixelValue(placeholderSize.width), RCTCeilPixelValue(placeholderSize.height));
-  placeholderSize.width += textContainerInset.left + textContainerInset.right;
-  placeholderSize.height += textContainerInset.top + textContainerInset.bottom;
+  placeholderSize.width += padding.left + padding.right;
+  placeholderSize.height += padding.top + padding.bottom;
   // Returning size DOES contain `textContainerInset` (aka `padding`; as `sizeThatFits:` does).
   return placeholderSize;
 }
@@ -252,6 +252,22 @@ static NSColor *defaultPlaceholderColor()
 {
   BOOL isVisible = _placeholder.length != 0 && self.attributedText.length == 0;
   _placeholderView.hidden = !isVisible;
+}
+
+#pragma mark - Padding
+
+- (void)setPaddingInsets:(NSEdgeInsets)paddingInsets
+{
+  _paddingInsets = paddingInsets;
+  self.textContainerInset = (NSSize){paddingInsets.right, paddingInsets.bottom};
+}
+
+- (NSPoint)textContainerOrigin
+{
+  return (NSPoint){
+    _paddingInsets.left - _paddingInsets.right,
+    _paddingInsets.top - _paddingInsets.bottom
+  };
 }
 
 @end

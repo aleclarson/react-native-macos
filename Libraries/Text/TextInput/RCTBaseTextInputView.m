@@ -81,7 +81,7 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithFrame:(CGRect)frame)
 {
   _reactPaddingInsets = reactPaddingInsets;
   // We apply `paddingInsets` as `backedTextInputView`'s `textContainerInset`.
-  self.backedTextInputView.textContainerInset = reactPaddingInsets;
+  self.backedTextInputView.paddingInsets = reactPaddingInsets;
   [self setNeedsLayout:YES];
 }
 

@@ -44,9 +44,9 @@
 
 #pragma mark - Properties
 
-- (void)setTextContainerInset:(NSEdgeInsets)textContainerInset
+- (void)setPaddingInsets:(NSEdgeInsets)paddingInsets
 {
-  _textContainerInset = textContainerInset;
+  _paddingInsets = paddingInsets;
   [self setNeedsLayout:YES];
 }
 
@@ -139,8 +139,8 @@
   NSString *text = self.placeholder ?: @"";
   CGSize size = [text sizeWithAttributes:@{NSFontAttributeName: self.font}];
   size = CGSizeMake(RCTCeilPixelValue(size.width), RCTCeilPixelValue(size.height));
-  size.width += _textContainerInset.left + _textContainerInset.right;
-  size.height += _textContainerInset.top + _textContainerInset.bottom;
+  size.width += _paddingInsets.left + _paddingInsets.right;
+  size.height += _paddingInsets.top + _paddingInsets.bottom;
   // Returning size DOES contain `textContainerInset` (aka `padding`).
   return size;
 }
