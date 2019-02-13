@@ -236,13 +236,13 @@
   return _selectable;
 }
 
-- (BOOL)canPerformAction:(SEL)action withSender:(id)sender
+- (BOOL)tryToPerform:(SEL)action with:(id)object
 {
   if (_selectable && action == @selector(copy:)) {
     return YES;
   }
   
-  return [self.nextResponder canPerformAction:action withSender:sender];
+  return [self.nextResponder tryToPerform:action with:object];
 }
 
 - (void)copy:(id)sender
