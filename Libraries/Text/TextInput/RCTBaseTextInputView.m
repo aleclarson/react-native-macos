@@ -82,7 +82,7 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithFrame:(CGRect)frame)
   _reactPaddingInsets = reactPaddingInsets;
   // We apply `paddingInsets` as `backedTextInputView`'s `textContainerInset`.
   self.backedTextInputView.textContainerInset = reactPaddingInsets;
-  [self setNeedsLayout];
+  [self setNeedsLayout:YES];
 }
 
 - (void)setReactBorderInsets:(NSEdgeInsets)reactBorderInsets
@@ -90,7 +90,7 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithFrame:(CGRect)frame)
   _reactBorderInsets = reactBorderInsets;
   // We apply `borderInsets` as `backedTextInputView` layout offset.
   self.backedTextInputView.frame = NSEdgeInsetsInsetRect(self.bounds, reactBorderInsets);
-  [self setNeedsLayout];
+  [self setNeedsLayout:YES];
 }
 
 - (NSAttributedString *)attributedText
