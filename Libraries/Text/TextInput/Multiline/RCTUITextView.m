@@ -139,6 +139,11 @@ static NSColor *defaultPlaceholderColor()
 
 #pragma mark - Overrides
 
+- (NSRange)selectedTextRange
+{
+  return self.selectedRange;
+}
+
 - (void)setSelectedTextRange:(NSRange)selectedTextRange notifyDelegate:(BOOL)notifyDelegate
 {
   if (!notifyDelegate) {
