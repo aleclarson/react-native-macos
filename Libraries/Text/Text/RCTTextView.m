@@ -33,7 +33,7 @@
 //    self.isAccessibilityElement = YES;
 //    self.accessibilityTraits |= UIAccessibilityTraitStaticText;
     RCTAssert(self.opaque == NO, @"RCTTextView must not be opaque");
-    self.contentMode = UIViewContentModeRedraw;
+//    self.contentMode = UIViewContentModeRedraw;
   }
   return self;
 }

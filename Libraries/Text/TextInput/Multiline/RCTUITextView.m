@@ -200,15 +200,15 @@ static NSColor *defaultPlaceholderColor()
     MAX(contentSize.height, placeholderSize.height));
 }
 
-- (void)layoutSubviews
-{
-  [super layoutSubviews];
-
-  CGRect textFrame = NSEdgeInsetsInsetRect(self.bounds, self.textContainerInset);
-  CGFloat placeholderHeight = [_placeholderView sizeThatFits:textFrame.size].height;
-  textFrame.size.height = MIN(placeholderHeight, textFrame.size.height);
-  _placeholderView.frame = textFrame;
-}
+//- (void)layoutSubviews
+//{
+//  [super layoutSubviews];
+//
+//  CGRect textFrame = NSEdgeInsetsInsetRect(self.bounds, self.textContainerInset);
+//  CGFloat placeholderHeight = [_placeholderView sizeThatFits:textFrame.size].height;
+//  textFrame.size.height = MIN(placeholderHeight, textFrame.size.height);
+//  _placeholderView.frame = textFrame;
+//}
 
 - (CGSize)intrinsicContentSize
 {
