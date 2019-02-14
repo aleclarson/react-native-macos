@@ -45,9 +45,9 @@ RCT_REMAP_VIEW_PROPERTY(placeholder, backedTextInputView.placeholder, NSString)
 RCT_REMAP_VIEW_PROPERTY(placeholderTextColor, backedTextInputView.placeholderColor, NSColor)
 
 RCT_REMAP_VIEW_PROPERTY(secureTextEntry, backedTextInputView.secureTextEntry, BOOL)
-RCT_REMAP_VIEW_PROPERTY(selectionColor, backedTextInputView.tintColor, NSColor)
+//RCT_REMAP_VIEW_PROPERTY(selectionColor, backedTextInputView.tintColor, NSColor)
 //RCT_REMAP_VIEW_PROPERTY(spellCheck, backedTextInputView.spellCheckingType, UITextSpellCheckingType)
-RCT_REMAP_VIEW_PROPERTY(caretHidden, backedTextInputView.caretHidden, BOOL)
+//RCT_REMAP_VIEW_PROPERTY(caretHidden, backedTextInputView.caretHidden, BOOL)
 
 RCT_EXPORT_VIEW_PROPERTY(blurOnSubmit, BOOL)
 RCT_EXPORT_VIEW_PROPERTY(clearTextOnFocus, BOOL)
