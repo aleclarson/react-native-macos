@@ -79,14 +79,14 @@ static void *TextFieldSelectionObservingContext = &TextFieldSelectionObservingCo
   return result;
 }
 
-- (BOOL)textFieldShouldReturn:(__unused NSTextField *)textField
-{
-  return [_backedTextInputView.textInputDelegate textInputShouldReturn];
-}
+//- (BOOL)textFieldShouldReturn:(__unused NSTextField *)textField
+//{
+//  return [_backedTextInputView.textInputDelegate textInputShouldReturn];
+//}
 
 #pragma mark - UIControlEventEditing* Family Events
 
-- (void)textFieldDidChange
+- (void)controlTextDidChange:(NSNotification *)notification
 {
   _textDidChangeIsComing = NO;
   [_backedTextInputView.textInputDelegate textInputDidChange];
