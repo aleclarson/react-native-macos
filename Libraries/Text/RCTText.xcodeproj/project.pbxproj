@@ -107,6 +107,7 @@
 		705EDE3D221378CC000CAA67 /* NSFont+LineHeight.m in Sources */ = {isa = PBXBuildFile; fileRef = 705EDE3C221378CC000CAA67 /* NSFont+LineHeight.m */; };
 		705EDE4022137BE7000CAA67 /* NSValue+CoreGraphics.m in Sources */ = {isa = PBXBuildFile; fileRef = 705EDE3F22137BE7000CAA67 /* NSValue+CoreGraphics.m */; };
 		705EDE432213890E000CAA67 /* NSLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 705EDE422213890E000CAA67 /* NSLabel.m */; };
+		70F43BF82214FEFE004F240F /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70F43BF72214FEFE004F240F /* AppKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -241,7 +242,19 @@
 		705EDE3F22137BE7000CAA67 /* NSValue+CoreGraphics.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSValue+CoreGraphics.m"; sourceTree = "<group>"; };
 		705EDE422213890E000CAA67 /* NSLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSLabel.m; sourceTree = "<group>"; };
 		705EDE4422138919000CAA67 /* NSLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSLabel.h; sourceTree = "<group>"; };
+		70F43BF72214FEFE004F240F /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		70F43BF52214FEF6004F240F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				70F43BF82214FEFE004F240F /* AppKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		58B511921A9E6C1200147676 = {
@@ -265,6 +278,7 @@
 				5956B121200FEBAA008D9D16 /* Text */,
 				5956B0FF200FEBA9008D9D16 /* TextInput */,
 				5956B12A200FEBAA008D9D16 /* VirtualText */,
+				70F43BF62214FEFE004F240F /* Frameworks */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -375,6 +389,14 @@
 			path = VirtualText;
 			sourceTree = "<group>";
 		};
+		70F43BF62214FEFE004F240F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				70F43BF72214FEFE004F240F /* AppKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -400,6 +422,7 @@
 			buildPhases = (
 				599DF25E1F0306540079B53E /* Copy Headers */,
 				58B511971A9E6C1200147676 /* Sources */,
+				70F43BF52214FEF6004F240F /* Frameworks */,
 			);
 			buildRules = (
 			);
