@@ -13,7 +13,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol RCTBackedTextInputViewProtocol <NSTextInputClient>
+@protocol RCTBackedTextInputViewProtocol
 
 @property (nonatomic, strong, nullable) NSColor *textColor;
 @property (nonatomic, strong, nullable) NSFont *font;
