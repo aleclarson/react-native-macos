@@ -35,8 +35,8 @@ RCT_EXPORT_MODULE()
 
 #pragma mark - Unified <TextInput> properties
 
-RCT_REMAP_VIEW_PROPERTY(autoCapitalize, backedTextInputView.autocapitalizationType, UITextAutocapitalizationType)
-RCT_REMAP_VIEW_PROPERTY(autoCorrect, backedTextInputView.autocorrectionType, UITextAutocorrectionType)
+//RCT_REMAP_VIEW_PROPERTY(autoCapitalize, backedTextInputView.autocapitalizationType, UITextAutocapitalizationType)
+//RCT_REMAP_VIEW_PROPERTY(autoCorrect, backedTextInputView.autocorrectionType, UITextAutocorrectionType)
 RCT_REMAP_VIEW_PROPERTY(editable, backedTextInputView.editable, BOOL)
 
 
@@ -46,7 +46,7 @@ RCT_REMAP_VIEW_PROPERTY(placeholderTextColor, backedTextInputView.placeholderCol
 
 RCT_REMAP_VIEW_PROPERTY(secureTextEntry, backedTextInputView.secureTextEntry, BOOL)
 RCT_REMAP_VIEW_PROPERTY(selectionColor, backedTextInputView.tintColor, NSColor)
-RCT_REMAP_VIEW_PROPERTY(spellCheck, backedTextInputView.spellCheckingType, UITextSpellCheckingType)
+//RCT_REMAP_VIEW_PROPERTY(spellCheck, backedTextInputView.spellCheckingType, UITextSpellCheckingType)
 RCT_REMAP_VIEW_PROPERTY(caretHidden, backedTextInputView.caretHidden, BOOL)
 
 RCT_EXPORT_VIEW_PROPERTY(blurOnSubmit, BOOL)
