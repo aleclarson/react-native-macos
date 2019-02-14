@@ -29,37 +29,36 @@ static void *TextFieldSelectionObservingContext = &TextFieldSelectionObservingCo
     _backedTextInputView = backedTextInputView;
     backedTextInputView.delegate = self;
 
-    [_backedTextInputView addTarget:self action:@selector(textFieldDidChange) forControlEvents:UIControlEventEditingChanged];
-    [_backedTextInputView addTarget:self action:@selector(textFieldDidEndEditingOnExit) forControlEvents:UIControlEventEditingDidEndOnExit];
+
   }
 
   return self;
 }
 
-- (void)dealloc
-{
-  [_backedTextInputView removeTarget:self action:nil forControlEvents:UIControlEventEditingChanged];
-  [_backedTextInputView removeTarget:self action:nil forControlEvents:UIControlEventEditingDidEndOnExit];
-}
+
+
+
+
+
 
 #pragma mark - NSTextFieldDelegate
 
-- (BOOL)textFieldShouldBeginEditing:(__unused UITextField *)textField
+- (BOOL)control:(__unused NSControl *)control textShouldBeginEditing:(__unused NSText *)fieldEditor
 {
   return [_backedTextInputView.textInputDelegate textInputShouldBeginEditing];
 }
 
-- (void)textFieldDidBeginEditing:(__unused UITextField *)textField
+- (void)controlTextDidBeginEditing:(__unused NSNotification *)notification
 {
   [_backedTextInputView.textInputDelegate textInputDidBeginEditing];
 }
 
-- (BOOL)textFieldShouldEndEditing:(__unused UITextField *)textField
+- (BOOL)control:(__unused NSControl *)control textShouldEndEditing:(__unused NSText *)fieldEditor
 {
   return [_backedTextInputView.textInputDelegate textInputShouldEndEditing];
 }
 
-- (void)textFieldDidEndEditing:(__unused UITextField *)textField
+- (void)controlTextDidEndEditing:(__unused NSNotification *)notification
 {
   if (_textDidChangeIsComing) {
     // iOS does't call `textViewDidChange:` delegate method if the change was happened because of autocorrection
@@ -71,7 +70,7 @@ static void *TextFieldSelectionObservingContext = &TextFieldSelectionObservingCo
   [_backedTextInputView.textInputDelegate textInputDidEndEditing];
 }
 
-- (BOOL)textField:(__unused UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+- (BOOL)textField:(__unused NSTextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
   BOOL result = [_backedTextInputView.textInputDelegate textInputShouldChangeTextInRange:range replacementText:string];
   if (result) {
@@ -80,7 +79,7 @@ static void *TextFieldSelectionObservingContext = &TextFieldSelectionObservingCo
   return result;
 }
 
-- (BOOL)textFieldShouldReturn:(__unused UITextField *)textField
+- (BOOL)textFieldShouldReturn:(__unused NSTextField *)textField
 {
   return [_backedTextInputView.textInputDelegate textInputShouldReturn];
 }
@@ -96,20 +95,20 @@ static void *TextFieldSelectionObservingContext = &TextFieldSelectionObservingCo
   [self textFieldProbablyDidChangeSelection];
 }
 
-- (void)textFieldDidEndEditingOnExit
-{
-  [_backedTextInputView.textInputDelegate textInputDidReturn];
-}
+
+
+
+
 
 #pragma mark - UIKeyboardInput (private UIKit protocol)
 
 // This method allows us to detect a [Backspace] `keyPress`
 // even when there is no more text in the `UITextField`.
-- (BOOL)keyboardInputShouldDelete:(__unused UITextField *)textField
-{
-  [_backedTextInputView.textInputDelegate textInputShouldChangeTextInRange:NSMakeRange(0, 0) replacementText:@""];
-  return YES;
-}
+//- (BOOL)keyboardInputShouldDelete:(__unused UITextField *)textField
+//{
+//  [_backedTextInputView.textInputDelegate textInputShouldChangeTextInRange:NSMakeRange(0, 0) replacementText:@""];
+//  return YES;
+//}
 
 #pragma mark - Public Interface
 
@@ -139,16 +138,16 @@ static void *TextFieldSelectionObservingContext = &TextFieldSelectionObservingCo
 
 #pragma mark - RCTBackedTextViewDelegateAdapter (for UITextView)
 
-@interface RCTBackedTextViewDelegateAdapter () <UITextViewDelegate>
+@interface RCTBackedTextViewDelegateAdapter () <NSTextViewDelegate>
 @end
 
 @implementation RCTBackedTextViewDelegateAdapter {
-  __weak UITextView<RCTBackedTextInputViewProtocol> *_backedTextInputView;
+  __unsafe_unretained NSTextView<RCTBackedTextInputViewProtocol> *_backedTextInputView;
   BOOL _textDidChangeIsComing;
   UITextRange *_previousSelectedTextRange;
 }
 
-- (instancetype)initWithTextView:(UITextView<RCTBackedTextInputViewProtocol> *)backedTextInputView
+- (instancetype)initWithTextView:(NSTextView<RCTBackedTextInputViewProtocol> *)backedTextInputView
 {
   if (self = [super init]) {
     _backedTextInputView = backedTextInputView;
@@ -158,24 +157,24 @@ static void *TextFieldSelectionObservingContext = &TextFieldSelectionObservingCo
   return self;
 }
 
-#pragma mark - UITextViewDelegate
+#pragma mark - NSTextViewDelegate
 
-- (BOOL)textViewShouldBeginEditing:(__unused UITextView *)textView
+- (BOOL)textShouldBeginEditing:(__unused NSText *)text
 {
   return [_backedTextInputView.textInputDelegate textInputShouldBeginEditing];
 }
 
-- (void)textViewDidBeginEditing:(__unused UITextView *)textView
+- (void)textDidBeginEditing:(__unused NSNotification *)notification
 {
   [_backedTextInputView.textInputDelegate textInputDidBeginEditing];
 }
 
-- (BOOL)textViewShouldEndEditing:(__unused UITextView *)textView
+- (BOOL)textShouldEndEditing:(__unused NSText *)text
 {
   return [_backedTextInputView.textInputDelegate textInputShouldEndEditing];
 }
 
-- (void)textViewDidEndEditing:(__unused UITextView *)textView
+- (void)textDidEndEditing:(__unused NSNotification *)notification
 {
   if (_textDidChangeIsComing) {
     // iOS does't call `textViewDidChange:` delegate method if the change was happened because of autocorrection
@@ -187,9 +186,9 @@ static void *TextFieldSelectionObservingContext = &TextFieldSelectionObservingCo
   [_backedTextInputView.textInputDelegate textInputDidEndEditing];
 }
 
-- (BOOL)textView:(__unused UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+- (BOOL)textView:(__unused NSTextView *)textView shouldChangeTextInRange:(NSRange)range replacementString:(NSString *)text
 {
-  // Custom implementation of `textInputShouldReturn` and `textInputDidReturn` pair for `UITextView`.
+  // Custom implementation of `textInputShouldReturn` and `textInputDidReturn` pair for `NSTextView`.
   if (!_backedTextInputView.textWasPasted && [text isEqualToString:@"\n"]) {
     if ([_backedTextInputView.textInputDelegate textInputShouldReturn]) {
       [_backedTextInputView.textInputDelegate textInputDidReturn];
@@ -205,13 +204,13 @@ static void *TextFieldSelectionObservingContext = &TextFieldSelectionObservingCo
   return result;
 }
 
-- (void)textViewDidChange:(__unused UITextView *)textView
+- (void)textDidChange:(__unused NSNotification *)notification
 {
   _textDidChangeIsComing = NO;
   [_backedTextInputView.textInputDelegate textInputDidChange];
 }
 
-- (void)textViewDidChangeSelection:(__unused UITextView *)textView
+- (void)textViewDidChangeSelection:(__unused NSNotification *)notification
 {
   [self textViewProbablyDidChangeSelection];
 }
