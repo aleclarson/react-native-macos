@@ -258,7 +258,7 @@ static void RCTProcessMetaPropsBorder(const YGValue metaProps[META_PROP_COUNT], 
 
 - (void)layoutWithMinimumSize:(CGSize)minimumSize
                   maximumSize:(CGSize)maximumSize
-              layoutDirection:(UIUserInterfaceLayoutDirection)layoutDirection
+              layoutDirection:(NSUserInterfaceLayoutDirection)layoutDirection
                 layoutContext:(RCTLayoutContext)layoutContext
 {
   YGNodeRef yogaNode = _yogaNode;

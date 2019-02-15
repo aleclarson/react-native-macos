@@ -27,21 +27,21 @@ RCTLayoutMetrics RCTLayoutMetricsFromYogaNode(YGNodeRef yogaNode)
     }
   };
 
-  UIEdgeInsets padding = (UIEdgeInsets){
+  NSEdgeInsets padding = (NSEdgeInsets){
     RCTCoreGraphicsFloatFromYogaFloat(YGNodeLayoutGetPadding(yogaNode, YGEdgeTop)),
     RCTCoreGraphicsFloatFromYogaFloat(YGNodeLayoutGetPadding(yogaNode, YGEdgeLeft)),
     RCTCoreGraphicsFloatFromYogaFloat(YGNodeLayoutGetPadding(yogaNode, YGEdgeBottom)),
     RCTCoreGraphicsFloatFromYogaFloat(YGNodeLayoutGetPadding(yogaNode, YGEdgeRight))
   };
 
-  UIEdgeInsets borderWidth = (UIEdgeInsets){
+  NSEdgeInsets borderWidth = (NSEdgeInsets){
     RCTCoreGraphicsFloatFromYogaFloat(YGNodeLayoutGetBorder(yogaNode, YGEdgeTop)),
     RCTCoreGraphicsFloatFromYogaFloat(YGNodeLayoutGetBorder(yogaNode, YGEdgeLeft)),
     RCTCoreGraphicsFloatFromYogaFloat(YGNodeLayoutGetBorder(yogaNode, YGEdgeBottom)),
     RCTCoreGraphicsFloatFromYogaFloat(YGNodeLayoutGetBorder(yogaNode, YGEdgeRight))
   };
 
-  UIEdgeInsets compoundInsets = (UIEdgeInsets){
+  NSEdgeInsets compoundInsets = (NSEdgeInsets){
     borderWidth.top + padding.top,
     borderWidth.left + padding.left,
     borderWidth.bottom + padding.bottom,
@@ -49,7 +49,7 @@ RCTLayoutMetrics RCTLayoutMetricsFromYogaNode(YGNodeRef yogaNode)
   };
 
   CGRect bounds = (CGRect){CGPointZero, frame.size};
-  CGRect contentFrame = UIEdgeInsetsInsetRect(bounds, compoundInsets);
+  CGRect contentFrame = NSEdgeInsetsInsetRect(bounds, compoundInsets);
 
   layoutMetrics.frame = frame;
   layoutMetrics.borderWidth = borderWidth;
@@ -100,24 +100,24 @@ CGFloat RCTCoreGraphicsFloatFromYogaValue(YGValue value, CGFloat baseFloatValue)
   }
 }
 
-YGDirection RCTYogaLayoutDirectionFromUIKitLayoutDirection(UIUserInterfaceLayoutDirection direction)
+YGDirection RCTYogaLayoutDirectionFromUIKitLayoutDirection(NSUserInterfaceLayoutDirection direction)
 {
   switch (direction) {
-    case UIUserInterfaceLayoutDirectionRightToLeft:
+    case NSUserInterfaceLayoutDirectionRightToLeft:
       return YGDirectionRTL;
-    case UIUserInterfaceLayoutDirectionLeftToRight:
+    case NSUserInterfaceLayoutDirectionLeftToRight:
       return YGDirectionLTR;
   }
 }
 
-UIUserInterfaceLayoutDirection RCTUIKitLayoutDirectionFromYogaLayoutDirection(YGDirection direction)
+NSUserInterfaceLayoutDirection RCTUIKitLayoutDirectionFromYogaLayoutDirection(YGDirection direction)
 {
   switch (direction) {
     case YGDirectionInherit:
     case YGDirectionLTR:
-      return UIUserInterfaceLayoutDirectionLeftToRight;
+      return NSUserInterfaceLayoutDirectionLeftToRight;
     case YGDirectionRTL:
-      return UIUserInterfaceLayoutDirectionRightToLeft;
+      return NSUserInterfaceLayoutDirectionRightToLeft;
   }
 }
 
