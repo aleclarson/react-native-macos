@@ -133,6 +133,15 @@
   _textWasPasted = YES;
 }
 
+- (BOOL)becomeFirstResponder
+{
+  if ([super becomeFirstResponder]) {
+    [_textInputDelegateAdapter textFieldDidFocus];
+    return YES;
+  }
+  return NO;
+}
+
 #pragma mark - Layout
 
 - (CGSize)contentSize
