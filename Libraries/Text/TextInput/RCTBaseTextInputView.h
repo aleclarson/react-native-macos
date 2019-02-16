@@ -51,13 +51,4 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-// Insets and returns the given NSRect by the given NSEdgeInsets.
-static inline CGRect NSEdgeInsetsInsetRect(NSRect rect, NSEdgeInsets insets) {
-  rect.origin.x  += insets.left;
-  rect.origin.y  += insets.top;
-  rect.size.width  -= (insets.left + insets.right);
-  rect.size.height -= (insets.top  + insets.bottom);
-  return rect;
-}
-
 NS_ASSUME_NONNULL_END
