@@ -133,6 +133,12 @@
   _textWasPasted = YES;
 }
 
+- (void)textViewDidChangeSelection:(NSNotification *)notification
+{
+  [super textViewDidChangeSelection:notification];
+  [_textInputDelegateAdapter selectedTextRangeWasSet];
+}
+
 - (BOOL)textView:(NSTextView *)textView shouldChangeTextInRange:(NSRange)range replacementString:(NSString *)string
 {
   if ([super textView:textView shouldChangeTextInRange:range replacementString:string]) {
