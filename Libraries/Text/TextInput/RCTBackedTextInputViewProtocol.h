@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 // explicitly specify should `delegate` be notified about the change or not.
 // If the change was initiated programmatically, we must NOT notify the delegate.
 // If the change was a result of user actions (like typing or touches), we MUST notify the delegate.
-- (void)setSelectedTextRange:(NSRange)selectedTextRange NS_UNAVAILABLE;
+@property (nonatomic, readonly) NSRange selectedTextRange;
 - (void)setSelectedTextRange:(NSRange)selectedTextRange notifyDelegate:(BOOL)notifyDelegate;
 
 // This protocol disallows direct access to `text` property because
@@ -40,7 +40,6 @@ NS_ASSUME_NONNULL_BEGIN
 // Use `attributedText.string` instead.
 @property (nonatomic, copy, nullable) NSString *text NS_UNAVAILABLE;
 
-- (NSRange)selectedTextRange;
 - (CGSize)sizeThatFits:(CGSize)size;
 
 @end

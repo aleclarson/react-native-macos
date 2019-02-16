@@ -126,11 +126,11 @@ static void *TextFieldSelectionObservingContext = &TextFieldSelectionObservingCo
 
 - (void)textFieldProbablyDidChangeSelection
 {
-  if (NSEqualRanges([_backedTextInputView selectedTextRange], _previousSelectedTextRange)) {
+  if (NSEqualRanges(_backedTextInputView.selectedTextRange, _previousSelectedTextRange)) {
     return;
   }
 
-  _previousSelectedTextRange = [_backedTextInputView selectedTextRange];
+  _previousSelectedTextRange = _backedTextInputView.selectedTextRange;
   [_backedTextInputView.textInputDelegate textInputDidChangeSelection];
 }
 
@@ -226,11 +226,11 @@ static void *TextFieldSelectionObservingContext = &TextFieldSelectionObservingCo
 
 - (void)textViewProbablyDidChangeSelection
 {
-  if (NSEqualRanges([_backedTextInputView selectedTextRange], _previousSelectedTextRange)) {
+  if (NSEqualRanges(_backedTextInputView.selectedTextRange, _previousSelectedTextRange)) {
     return;
   }
 
-  _previousSelectedTextRange = [_backedTextInputView selectedTextRange];
+  _previousSelectedTextRange = _backedTextInputView.selectedTextRange;
   [_backedTextInputView.textInputDelegate textInputDidChangeSelection];
 }
 
