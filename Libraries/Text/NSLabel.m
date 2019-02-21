@@ -23,6 +23,9 @@
   return self;
 }
 
-//RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)decoder)
+- (NSView *)hitTest:(__unused NSPoint)point
+{
+  return nil;
+}
 
 @end
