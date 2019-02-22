@@ -87,9 +87,10 @@
 
 - (void)setUpToolbar
 {
-  _toolbar = [[NSToolbar alloc] initWithIdentifier:@"mainToolbar"];
-  _toolbar.delegate = self;
-  _toolbar.sizeMode = NSToolbarSizeModeRegular;
+  NSToolbar *toolbar = [[NSToolbar alloc] initWithIdentifier:@"mainToolbar"];
+  toolbar.delegate = self;
+  toolbar.sizeMode = NSToolbarSizeModeRegular;
+  _window.toolbar = toolbar;
 }
 
 - (NSArray *)toolbarAllowedItemIdentifiers:(__unused NSToolbar *)toolbar
