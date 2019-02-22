@@ -17,6 +17,7 @@
 #import <React/RCTUtils.h>
 #import <React/NSView+React.h>
 
+#import "NSLabel.h"
 #import "RCTTextAttributes.h"
 #import "RCTTextSelection.h"
 
@@ -26,6 +27,7 @@
   BOOL _hasInputAccesoryView;
   NSString *_Nullable _predictedText;
   NSInteger _nativeEventCount;
+  NSLabel *_placeholderView;
 }
 
 - (instancetype)initWithBridge:(RCTBridge *)bridge
@@ -62,27 +64,13 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithFrame:(CGRect)frame)
 - (void)setTextAttributes:(RCTTextAttributes *)textAttributes
 {
   _textAttributes = textAttributes;
-  [self enforceTextAttributesIfNeeded];
-}
 
-- (void)enforceTextAttributesIfNeeded
-{
   id<RCTBackedTextInputViewProtocol> backedTextInputView = self.backedTextInputView;
-  if (backedTextInputView.attributedText.string.length != 0) {
-    return;
-  }
-
   backedTextInputView.font = _textAttributes.effectiveFont;
   backedTextInputView.textColor = _textAttributes.effectiveForegroundColor;
   backedTextInputView.textAlignment = _textAttributes.alignment;
-}
 
-- (void)setReactPaddingInsets:(NSEdgeInsets)reactPaddingInsets
-{
-  _reactPaddingInsets = reactPaddingInsets;
-  // We apply `paddingInsets` as `backedTextInputView`'s `textContainerInset`.
-  self.backedTextInputView.paddingInsets = reactPaddingInsets;
-  [self setNeedsLayout:YES];
+  [self updatePlaceholderStyle];
 }
 
 static inline CGRect NSEdgeInsetsInsetRect(CGRect rect, NSEdgeInsets insets) {
@@ -93,11 +81,21 @@ static inline CGRect NSEdgeInsetsInsetRect(CGRect rect, NSEdgeInsets insets) {
   return rect;
 }
 
+- (void)setReactPaddingInsets:(NSEdgeInsets)reactPaddingInsets
+{
+  _reactPaddingInsets = reactPaddingInsets;
+  // Apply `reactPaddingInsets` as `backedTextInputView` padding insets.
+  self.backedTextInputView.paddingInsets = reactPaddingInsets;
+  [self updatePlaceholderFrame];
+  [self setNeedsLayout:YES];
+}
+
 - (void)setReactBorderInsets:(NSEdgeInsets)reactBorderInsets
 {
   _reactBorderInsets = reactBorderInsets;
   // We apply `borderInsets` as `backedTextInputView` layout offset.
   self.backedTextInputView.frame = NSEdgeInsetsInsetRect(self.bounds, reactBorderInsets);
+  [self updatePlaceholderFrame];
   [self setNeedsLayout:YES];
 }
 
@@ -115,6 +113,7 @@ static inline CGRect NSEdgeInsetsInsetRect(CGRect rect, NSEdgeInsets insets) {
     NSInteger oldTextLength = self.backedTextInputView.attributedText.string.length;
 
     self.backedTextInputView.attributedText = attributedText;
+    [self updatePlaceholderVisibility];
 
     if (selection.length == 0) {
       // Maintaining a cursor position relative to the end of the old text.
@@ -176,6 +175,7 @@ static inline CGRect NSEdgeInsetsInsetRect(CGRect rect, NSEdgeInsets insets) {
 {
   if (_clearTextOnFocus) {
     self.backedTextInputView.attributedText = [NSAttributedString new];
+    [self updatePlaceholderVisibility];
   }
 
   if (_selectTextOnFocus) {
@@ -305,6 +305,7 @@ static inline CGRect NSEdgeInsetsInsetRect(CGRect rect, NSEdgeInsets insets) {
 - (void)textInputDidChange
 {
   [self updateLocalData];
+  [self updatePlaceholderVisibility];
 
   NSString *text = self.attributedText.string;
 
@@ -502,6 +503,76 @@ static BOOL findMismatch(NSString *first, NSString *second, NSRange *firstRange,
   *firstRange = NSMakeRange(firstMismatch, lastMismatch - firstMismatch);
   *secondRange = NSMakeRange(firstMismatch, ii - firstMismatch);
   return YES;
+}
+
+#pragma mark - Placeholder
+
+- (NSLabel *)placeholderView
+{
+  if (_placeholderView == nil) {
+    _placeholderView = [[NSLabel alloc] initWithFrame:NSZeroRect];
+    [self updatePlaceholderStyle];
+    [self updatePlaceholderFrame];
+    [self addSubview:_placeholderView positioned:NSWindowBelow relativeTo:self.backedTextInputView];
+  }
+  return _placeholderView;
+}
+
+- (NSString *)placeholder
+{
+  return _placeholderView.text;
+}
+
+- (void)setPlaceholder:(NSString *)placeholder
+{
+  if (placeholder) {
+    // Use "self" to ensure "placeholderView" exists.
+    self.placeholderView.text = placeholder;
+  } else if (_placeholderView) {
+    [_placeholderView removeFromSuperview];
+    _placeholderView = nil;
+  }
+}
+
+- (NSColor *)placeholderColor
+{
+  return _placeholderView.textColor;
+}
+
+- (void)setPlaceholderColor:(NSColor *)color
+{
+  // Use "self" to ensure "placeholderView" exists.
+  self.placeholderView.textColor = color ?: _textAttributes.effectiveForegroundColor;
+}
+
+- (void)updatePlaceholderStyle
+{
+  if (_placeholderView && _textAttributes) {
+    _placeholderView.font = _textAttributes.effectiveFont;
+    _placeholderView.textColor = _textAttributes.effectiveForegroundColor;
+    _placeholderView.alignment = _textAttributes.alignment;
+  }
+}
+
+- (void)updatePlaceholderFrame
+{
+  if (_placeholderView) {
+    _placeholderView.frame = NSEdgeInsetsInsetRect(self.bounds, self.reactCompoundInsets);
+  }
+}
+
+- (void)updatePlaceholderVisibility
+{
+  if (_placeholderView) {
+    BOOL hidden = _placeholderView.text.length == 0 || self.attributedText.length > 0;
+    _placeholderView.hidden = hidden;
+  }
+}
+
+- (void)setFrame:(NSRect)frame
+{
+  [super setFrame:frame];
+  [self updatePlaceholderFrame];
 }
 
 @end

@@ -41,8 +41,8 @@ RCT_REMAP_VIEW_PROPERTY(editable, backedTextInputView.editable, BOOL)
 
 
 
-RCT_REMAP_VIEW_PROPERTY(placeholder, backedTextInputView.placeholder, NSString)
-RCT_REMAP_VIEW_PROPERTY(placeholderTextColor, backedTextInputView.placeholderColor, NSColor)
+RCT_EXPORT_VIEW_PROPERTY(placeholder, NSString)
+RCT_REMAP_VIEW_PROPERTY(placeholderTextColor, placeholderColor, NSColor)
 
 RCT_REMAP_VIEW_PROPERTY(secureTextEntry, backedTextInputView.secureTextEntry, BOOL)
 //RCT_REMAP_VIEW_PROPERTY(selectionColor, backedTextInputView.tintColor, NSColor)
