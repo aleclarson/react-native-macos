@@ -89,6 +89,11 @@
 
 #pragma mark - Overrides
 
+- (void)selectAll:(nullable id)sender
+{
+  [self.currentEditor selectAll:sender];
+}
+
 - (NSRange)selectedTextRange {
   return self.currentEditor.selectedRange;
 }
