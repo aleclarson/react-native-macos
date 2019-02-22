@@ -94,13 +94,9 @@
   [self.currentEditor selectAll:sender];
 }
 
-- (NSRange)selectedTextRange {
-  return self.currentEditor.selectedRange;
-}
-
-- (void)setSelectedTextRange:(NSRange)selectedTextRange
+- (NSRange)selectedTextRange
 {
-  // Always use "setSelectedTextRange:notifyDelegate:" instead
+  return self.currentEditor.selectedRange;
 }
 
 - (void)setSelectedTextRange:(NSRange)selectedTextRange notifyDelegate:(BOOL)notifyDelegate
