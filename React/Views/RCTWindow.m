@@ -18,14 +18,15 @@
 @implementation RCTWindow
 {
   RCTBridge *_bridge;
-  
+
   NSMutableDictionary *_mouseInfo;
   NSView *_hoveredView;
   NSView *_clickedView;
   NSEventType _clickType;
   uint16_t _coalescingKey;
-  
+
   BOOL _inContentView;
+  BOOL _enabled;
 }
 
 RCT_NOT_IMPLEMENTED(- (instancetype)initWithContentRect:(NSRect)contentRect styleMask:(NSWindowStyleMask)style backing:(NSBackingStoreType)backingStoreType defer:(BOOL)flag)
@@ -39,18 +40,28 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithContentRect:(NSRect)contentRect styl
                           styleMask:style
                             backing:NSBackingStoreBuffered
                               defer:defer];
-  
+
   if (self) {
     _bridge = bridge;
-    
+
     _mouseInfo = [NSMutableDictionary new];
     _mouseInfo[@"changedTouches"] = @[]; // Required for "mouseMove" events
     _mouseInfo[@"identifier"] = @0; // Required for "touch*" events
-    
+
     // The owner must set "contentView" manually.
     super.contentView = nil;
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(_javaScriptDidLoad:)
+                                                 name:RCTJavaScriptDidLoadNotification
+                                               object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(_bridgeWillReload:)
+                                                 name:RCTBridgeWillReloadNotification
+                                               object:nil];
   }
-  
+
   return self;
 }
 
@@ -59,20 +70,25 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithContentRect:(NSRect)contentRect styl
 - (void)sendEvent:(NSEvent *)event
 {
   [super sendEvent:event];
-  
+
+  // Avoid sending JS events too early.
+  if (_enabled == NO) {
+    return;
+  }
+
   NSEventType type = event.type;
-  
+
   if (type == NSEventTypeMouseEntered) {
     if (event.trackingArea.owner == self.contentView) {
       _inContentView = YES;
     }
     return;
   }
-  
+
   if (type == NSEventTypeMouseExited) {
     if (event.trackingArea.owner == self.contentView) {
       _inContentView = NO;
-      
+
       if (_clickedView) {
         if (_clickType == NSEventTypeLeftMouseDown) {
           [self _sendTouchEvent:@"touchCancel"];
@@ -80,12 +96,12 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithContentRect:(NSRect)contentRect styl
         _clickedView = nil;
         _clickType = 0;
       }
-      
+
       [self _setHoveredView:nil];
     }
     return;
   }
-  
+
   if (type != NSEventTypeMouseMoved &&
       type != NSEventTypeLeftMouseDragged &&
       type != NSEventTypeLeftMouseUp &&
@@ -94,10 +110,10 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithContentRect:(NSRect)contentRect styl
       type != NSEventTypeRightMouseDown) {
     return;
   }
-  
+
   NSView *targetView = [self.contentView reactHitTest:event.locationInWindow];
   [self _readMouseEvent:event withTarget:targetView];
-  
+
   if (_clickedView) {
     if (type == NSEventTypeLeftMouseDragged) {
       if (_clickType == NSEventTypeLeftMouseDown) {
@@ -110,15 +126,15 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithContentRect:(NSRect)contentRect styl
       if (_inContentView == NO) {
         return; // Ignore "mouseMove" events outside the "contentView"
       }
-      
+
       [self _setHoveredView:targetView];
       return;
     }
-    
+
     if (targetView == nil) {
       return;
     }
-    
+
     if (type == NSEventTypeLeftMouseDown || type == NSEventTypeRightMouseDown) {
       // When the "firstResponder" is a NSTextView, "mouseUp" and "mouseDragged" events are swallowed,
       // so we should skip tracking of "mouseDown" events in order to avoid corrupted state.
@@ -128,33 +144,33 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithContentRect:(NSRect)contentRect styl
         if ([clickedView isDescendantOf:fieldEditor]) {
           return;
         }
-        
+
         // Blur the field editor when clicking outside it.
         [self makeFirstResponder:nil];
       }
-      
+
       if (type == NSEventTypeLeftMouseDown) {
         [self _sendTouchEvent:@"touchStart"];
       }
-      
+
       _clickedView = targetView;
       _clickType = type;
       return;
     }
   }
-  
+
   if (type == NSEventTypeLeftMouseUp) {
     if (_clickType == NSEventTypeLeftMouseDown) {
       [self _sendTouchEvent:@"touchEnd"];
       _clickedView = nil;
       _clickType = 0;
     }
-    
+
     // Update the "hoveredView" now, instead of waiting for the next "mouseMove" event.
     [self _setHoveredView:targetView];
     return;
   }
-  
+
   if (type == NSEventTypeRightMouseUp) {
     if (_clickType == NSEventTypeRightMouseDown) {
       // Right clicks must end in the same React "ancestor chain" they started in.
@@ -164,7 +180,7 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithContentRect:(NSRect)contentRect styl
       _clickedView = nil;
       _clickType = 0;
     }
-    
+
     // Update the "hoveredView" now, instead of waiting for the next "mouseMove" event.
     [self _setHoveredView:targetView];
     return;
@@ -181,14 +197,14 @@ static inline BOOL hasFlag(NSUInteger flags, NSUInteger flag) {
 {
   CGPoint absoluteLocation = event.locationInWindow;
   CGPoint relativeLocation = [self.contentView convertPoint:absoluteLocation toView:view];
-  
+
   _mouseInfo[@"pageX"] = @(RCTSanitizeNaNValue(absoluteLocation.x, @"touchData.pageX"));
   _mouseInfo[@"pageY"] = @(RCTSanitizeNaNValue(absoluteLocation.y, @"touchData.pageY"));
   _mouseInfo[@"locationX"] = @(RCTSanitizeNaNValue(relativeLocation.x, @"touchData.locationX"));
   _mouseInfo[@"locationY"] = @(RCTSanitizeNaNValue(relativeLocation.x, @"touchData.locationY"));
   _mouseInfo[@"timestamp"] = @(event.timestamp * 1000); // in ms, for JS
   _mouseInfo[@"target"] = view.reactTag;
-  
+
   NSUInteger flags = event.modifierFlags & NSEventModifierFlagDeviceIndependentFlagsMask;
   _mouseInfo[@"altKey"] = @(hasFlag(flags, NSEventModifierFlagOption));
   _mouseInfo[@"ctrlKey"] = @(hasFlag(flags, NSEventModifierFlagControl));
@@ -201,18 +217,18 @@ static inline BOOL hasFlag(NSUInteger flags, NSUInteger flag) {
   if (_hoveredView && !(view && view == _hoveredView)) {
     _mouseInfo[@"target"] = _hoveredView.reactTag;
     _hoveredView = nil;
-    
+
     [self _sendMouseEvent:@"mouseOut"];
   }
-  
+
   if (view) {
     _mouseInfo[@"target"] = view.reactTag;
-    
+
     if (_hoveredView == nil) {
       _hoveredView = view;
       [self _sendMouseEvent:@"mouseOver"];
     }
-    
+
     [self _sendMouseEvent:@"mouseMove"];
   }
 }
@@ -223,11 +239,11 @@ static inline BOOL hasFlag(NSUInteger flags, NSUInteger flag) {
                                                            target:_mouseInfo[@"target"]
                                                          userInfo:_mouseInfo
                                                     coalescingKey:_coalescingKey];
-  
+
   if (![eventName isEqualToString:@"mouseMove"]) {
     _coalescingKey++;
   }
-  
+
   [_bridge.eventDispatcher sendEvent:event];
 }
 
@@ -238,12 +254,22 @@ static inline BOOL hasFlag(NSUInteger flags, NSUInteger flag) {
                                                      reactTouches:@[_mouseInfo]
                                                    changedIndexes:@[@0]
                                                     coalescingKey:_coalescingKey];
-  
+
   if (![eventName isEqualToString:@"touchMove"]) {
     _coalescingKey++;
   }
-  
+
   [_bridge.eventDispatcher sendEvent:event];
+}
+
+- (void)_javaScriptDidLoad:(__unused NSNotification *)notification
+{
+  _enabled = YES;
+}
+
+- (void)_bridgeWillReload:(__unused NSNotification *)notification
+{
+  _enabled = NO;
 }
 
 @end

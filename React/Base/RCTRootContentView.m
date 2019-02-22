@@ -109,6 +109,9 @@ RCT_NOT_IMPLEMENTED(-(instancetype)initWithCoder:(nonnull NSCoder *)aDecoder)
 
 - (void)viewDidMoveToWindow
 {
+  if (self.window == nil) {
+    return;
+  }
   // RCTWindow handles all touches within
   if ([self.window isKindOfClass:RCTWindow.class] == NO) {
     if (_touchHandler == nil) {
