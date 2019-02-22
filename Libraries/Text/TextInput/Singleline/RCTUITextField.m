@@ -159,14 +159,4 @@
   self.attributedStringValue = attributedText;
 }
 
-- (NSTextAlignment)textAlignment
-{
-  return self.alignment;
-}
-
-- (void)setTextAlignment:(NSTextAlignment)textAlignment
-{
-  self.alignment = textAlignment;
-}
-
 @end

@@ -60,16 +60,6 @@
 
 #pragma mark - Overrides
 
-- (NSTextAlignment)textAlignment
-{
-  return self.alignment;
-}
-
-- (void)setTextAlignment:(NSTextAlignment)textAlignment
-{
-  [self setAlignment:textAlignment];
-}
-
 - (NSString *)text
 {
   return self.string;
