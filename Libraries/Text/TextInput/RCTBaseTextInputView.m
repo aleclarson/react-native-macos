@@ -354,7 +354,7 @@ static inline CGRect NSEdgeInsetsInsetRect(CGRect rect, NSEdgeInsets insets) {
 
 - (void)updateLocalData
 {
-  [self enforceTextAttributesIfNeeded];
+//  [self enforceTextAttributesIfNeeded];
 
   [_bridge.uiManager setLocalData:[self.backedTextInputView.attributedText copy]
                           forView:self];
