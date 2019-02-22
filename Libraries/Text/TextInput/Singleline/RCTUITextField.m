@@ -22,6 +22,8 @@
   RCTBackedTextFieldDelegateAdapter *_textInputDelegateAdapter;
 }
 
+@dynamic font, alignment; // NSTextField provides these properties
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
   if (self = [super initWithFrame:frame]) {
