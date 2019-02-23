@@ -242,7 +242,7 @@
                              inRange:NSMakeRange(0, attributedText.length)
                              options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired
                           usingBlock:
-    ^(UIFont *font, NSRange range, __unused BOOL *stop) {
+    ^(NSFont *font, NSRange range, __unused BOOL *stop) {
       if (maximumDescender > font.descender) {
         maximumDescender = font.descender;
       }
