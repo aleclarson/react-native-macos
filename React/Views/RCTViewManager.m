@@ -76,7 +76,7 @@ RCT_EXPORT_MODULE()
     @"mouseMove",
     @"mouseOver",
     @"mouseOut",
-    @"rightClick",
+    @"contextMenu",
   ];
 }
 

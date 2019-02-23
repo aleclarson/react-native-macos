@@ -178,7 +178,7 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithContentRect:(NSRect)contentRect styl
     if (_clickType == NSEventTypeRightMouseDown) {
       // Right clicks must end in the same React "ancestor chain" they started in.
       if ([_clickedView isDescendantOf:targetView]) {
-        [self _sendMouseEvent:@"rightClick"];
+        [self _sendMouseEvent:@"contextMenu"];
       }
       _clickedView = nil;
       _clickType = 0;
