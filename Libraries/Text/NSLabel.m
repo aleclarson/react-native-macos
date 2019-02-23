@@ -46,7 +46,7 @@
     self.textColor       = self.defaultTextColor;
     self.backgroundColor = self.defaultBackgroundColor;
     self.numberOfLines   = 1;
-    self.alignment       = NSLeftTextAlignment;
+    self.alignment       = NSTextAlignmentLeft;
     self.lineBreakMode   = NSLineBreakByTruncatingTail;
   }
 
@@ -150,11 +150,7 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)coder)
 {
   NSMutableParagraphStyle* ps = [NSMutableParagraphStyle new];
   ps.alignment = self.alignment;
-
-  if (self.numberOfLines) {
-    ps.lineBreakMode = self.lineBreakMode;
-  }
-
+  ps.lineBreakMode = self.lineBreakMode;
   return ps;
 }
 
@@ -210,6 +206,13 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)coder)
   [self setNeedsDisplay:YES];
 }
 
+- (void)setNumberOfLines:(NSInteger)numberOfLines
+{
+  _numberOfLines = numberOfLines;
+  [self invalidateIntrinsicContentSize];
+  [self setNeedsDisplay:YES];
+}
+
 - (void)setAlignment:(NSTextAlignment)alignment
 {
   _alignment = alignment;
@@ -220,6 +223,13 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)coder)
 - (void)setLineBreakMode:(NSLineBreakMode)lineBreakMode
 {
   _lineBreakMode = lineBreakMode;
+  [self invalidateIntrinsicContentSize];
+  [self setNeedsDisplay:YES];
+}
+
+- (void)setPreferredMaxLayoutWidth:(CGFloat)preferredMaxLayoutWidth
+{
+  _preferredMaxLayoutWidth = preferredMaxLayoutWidth;
   [self invalidateIntrinsicContentSize];
   [self setNeedsDisplay:YES];
 }
