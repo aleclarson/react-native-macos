@@ -61,6 +61,8 @@
 		70D4B513221705C10007C3F1 /* RCTBackedTextInputDelegateAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5956B10D200FEBA9008D9D16 /* RCTBackedTextInputDelegateAdapter.m */; };
 		70DB42002225BAE30019CAF9 /* RCTFieldEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DB41FF2225BAE30019CAF9 /* RCTFieldEditor.m */; };
 		70DB42072225E42F0019CAF9 /* RCTFieldEditor.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 70DB41FE2225BAE30019CAF9 /* RCTFieldEditor.h */; };
+		70DB42062225CD340019CAF9 /* NSText+Editing.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DB42052225CD340019CAF9 /* NSText+Editing.m */; };
+		70DB420C2225E4470019CAF9 /* NSText+Editing.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 70DB42042225CD340019CAF9 /* NSText+Editing.h */; };
 		70F43BF82214FEFE004F240F /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70F43BF72214FEFE004F240F /* AppKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -71,6 +73,7 @@
 			dstPath = include/RCTText;
 			dstSubfolderSpec = 16;
 			files = (
+				70DB420C2225E4470019CAF9 /* NSText+Editing.h in Copy Headers */,
 				70DB42072225E42F0019CAF9 /* RCTFieldEditor.h in Copy Headers */,
 				5956B160200FF324008D9D16 /* RCTBaseTextShadowView.h in Copy Headers */,
 				5956B161200FF324008D9D16 /* RCTBaseTextViewManager.h in Copy Headers */,
@@ -163,6 +166,8 @@
 		705EDE4422138919000CAA67 /* NSLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSLabel.h; sourceTree = "<group>"; };
 		70DB41FE2225BAE30019CAF9 /* RCTFieldEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTFieldEditor.h; sourceTree = "<group>"; };
 		70DB41FF2225BAE30019CAF9 /* RCTFieldEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTFieldEditor.m; sourceTree = "<group>"; };
+		70DB42042225CD340019CAF9 /* NSText+Editing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSText+Editing.h"; sourceTree = "<group>"; };
+		70DB42052225CD340019CAF9 /* NSText+Editing.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSText+Editing.m"; sourceTree = "<group>"; };
 		70F43BF72214FEFE004F240F /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -189,6 +194,8 @@
 				705EDE3C221378CC000CAA67 /* NSFont+LineHeight.m */,
 				705EDE2E22132863000CAA67 /* NSBezierPath+CGPath.h */,
 				705EDE2F22132863000CAA67 /* NSBezierPath+CGPath.m */,
+				70DB42042225CD340019CAF9 /* NSText+Editing.h */,
+				70DB42052225CD340019CAF9 /* NSText+Editing.m */,
 				5956B11B200FEBA9008D9D16 /* BaseText */,
 				58B5119C1A9E6C1200147676 /* Products */,
 				5956B0FA200FEBA9008D9D16 /* RawText */,
@@ -400,6 +407,7 @@
 				5956B138200FEBAA008D9D16 /* RCTTextSelection.m in Sources */,
 				5956B130200FEBAA008D9D16 /* RCTRawTextShadowView.m in Sources */,
 				5956B141200FEBAA008D9D16 /* NSTextStorage+FontScaling.m in Sources */,
+				70DB42062225CD340019CAF9 /* NSText+Editing.m in Sources */,
 				5956B132200FEBAA008D9D16 /* RCTSinglelineTextInputView.m in Sources */,
 				5956B13A200FEBAA008D9D16 /* RCTMultilineTextInputView.m in Sources */,
 				5956B133200FEBAA008D9D16 /* RCTUITextField.m in Sources */,
