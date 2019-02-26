@@ -62,6 +62,7 @@
 		70DB42002225BAE30019CAF9 /* RCTFieldEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DB41FF2225BAE30019CAF9 /* RCTFieldEditor.m */; };
 		70DB42072225E42F0019CAF9 /* RCTFieldEditor.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 70DB41FE2225BAE30019CAF9 /* RCTFieldEditor.h */; };
 		70DB42062225CD340019CAF9 /* NSText+Editing.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DB42052225CD340019CAF9 /* NSText+Editing.m */; };
+		70DB42082225E4470019CAF9 /* NSLabel.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 705EDE4422138919000CAA67 /* NSLabel.h */; };
 		70DB420C2225E4470019CAF9 /* NSText+Editing.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 70DB42042225CD340019CAF9 /* NSText+Editing.h */; };
 		70F43BF82214FEFE004F240F /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70F43BF72214FEFE004F240F /* AppKit.framework */; };
 /* End PBXBuildFile section */
@@ -73,6 +74,7 @@
 			dstPath = include/RCTText;
 			dstSubfolderSpec = 16;
 			files = (
+				70DB42082225E4470019CAF9 /* NSLabel.h in Copy Headers */,
 				70DB420C2225E4470019CAF9 /* NSText+Editing.h in Copy Headers */,
 				70DB42072225E42F0019CAF9 /* RCTFieldEditor.h in Copy Headers */,
 				5956B160200FF324008D9D16 /* RCTBaseTextShadowView.h in Copy Headers */,
