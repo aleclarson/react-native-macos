@@ -166,7 +166,7 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)coder)
 
 - (NSColor*)defaultBackgroundColor
 {
-  return [NSColor windowBackgroundColor];
+  return [NSColor clearColor];
 }
 
 #pragma mark - Display setters
