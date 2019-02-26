@@ -14,9 +14,13 @@
 
 #import "RCTUITextView.h"
 
+@interface RCTMultilineTextInputView () <RCTTextScrollViewDelegate>
+@end
+
 @implementation RCTMultilineTextInputView
 {
   RCTUITextView *_backedTextInputView;
+  RCTTextScrollView *_scrollView;
 }
 
 - (instancetype)initWithBridge:(RCTBridge *)bridge
@@ -35,6 +39,7 @@
 
     _scrollView = [[RCTTextScrollView alloc] initWithFrame:NSZeroRect];
     _scrollView.documentView = _backedTextInputView;
+    _scrollView.delegate = self;
 
     [self addSubview:_scrollView];
   }
@@ -70,6 +75,41 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)coder)
 
 #pragma mark - NSScrollViewDelegate
 
+- (void)scrollViewDidScroll:(RCTTextScrollView *)scrollView
+{
+  RCTDirectEventBlock onScroll = self.onScroll;
+
+  if (onScroll) {
+    NSSize size = scrollView.bounds.size;
+    NSSize contentSize = scrollView.contentSize;
+    NSPoint contentOffset = scrollView.contentOffset;
+    NSEdgeInsets contentInset = scrollView.contentInsets;
+
+    onScroll(@{
+      @"contentOffset": @{
+        @"x": @(contentOffset.x),
+        @"y": @(contentOffset.y)
+      },
+      @"contentInset": @{
+        @"top": @(contentInset.top),
+        @"left": @(contentInset.left),
+        @"bottom": @(contentInset.bottom),
+        @"right": @(contentInset.right)
+      },
+      @"contentSize": @{
+        @"width": @(contentSize.width),
+        @"height": @(contentSize.height)
+      },
+      @"layoutMeasurement": @{
+        @"width": @(size.width),
+        @"height": @(size.height)
+      },
+      @"zoomScale": @(1),
+      @"target": self.reactTag,
+    });
+  }
+}
+
 @end
 
 @implementation RCTTextScrollView
@@ -77,6 +117,7 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)coder)
 - (instancetype)initWithFrame:(NSRect)frame
 {
   if (self = [super initWithFrame:frame]) {
+    self.drawsBackground = NO;
     self.hasVerticalScroller = YES;
     self.automaticallyAdjustsContentInsets = NO;
 
@@ -94,35 +135,14 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)coder)
   [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (NSPoint)contentOffset
+{
+  return self.contentView.bounds.origin;
+}
+
 - (void)_didScroll
 {
-  if (self.onScroll) {
-    NSSize size = self.bounds.size;
-    NSRect contentRect = self.contentView.bounds;
-    NSEdgeInsets contentInset = self.contentInsets;
-
-    self.onScroll(@{
-      @"contentOffset": @{
-        @"x": @(contentRect.origin.x),
-        @"y": @(contentRect.origin.y)
-      },
-      @"contentInset": @{
-        @"top": @(contentInset.top),
-        @"left": @(contentInset.left),
-        @"bottom": @(contentInset.bottom),
-        @"right": @(contentInset.right)
-      },
-      @"contentSize": @{
-        @"width": @(contentRect.size.width),
-        @"height": @(contentRect.size.height)
-      },
-      @"layoutMeasurement": @{
-        @"width": @(size.width),
-        @"height": @(size.height)
-      },
-      @"zoomScale": @(1),
-    });
-  }
+  [self.delegate scrollViewDidScroll:self];
 }
 
 @end

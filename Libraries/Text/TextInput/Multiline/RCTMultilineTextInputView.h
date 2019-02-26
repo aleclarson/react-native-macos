@@ -11,14 +11,24 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RCTTextScrollView : NSScrollView
+@class RCTTextScrollView;
+
+@interface RCTMultilineTextInputView : RCTBaseTextInputView
 @property (nonatomic, copy) RCTDirectEventBlock onScroll;
 @end
 
 #pragma mark -
 
-@interface RCTMultilineTextInputView : RCTBaseTextInputView
-@property (nonatomic, strong) RCTTextScrollView *scrollView;
+@protocol RCTTextScrollViewDelegate
+- (void)scrollViewDidScroll:(RCTTextScrollView *)scrollView;
+@end
+
+#pragma mark -
+
+@interface RCTTextScrollView : NSScrollView
+@property (nonatomic, weak) id<RCTTextScrollViewDelegate> delegate;
+@property (nonatomic, assign) BOOL scrollEnabled;
+@property (readonly) NSPoint contentOffset;
 @end
 
 NS_ASSUME_NONNULL_END
