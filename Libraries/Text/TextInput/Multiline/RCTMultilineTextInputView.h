@@ -11,8 +11,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RCTMultilineTextInputView : RCTBaseTextInputView
+@interface RCTTextScrollView : NSScrollView
+@property (nonatomic, copy) RCTDirectEventBlock onScroll;
+@end
 
+#pragma mark -
+
+@interface RCTMultilineTextInputView : RCTBaseTextInputView
+@property (nonatomic, strong) RCTTextScrollView *scrollView;
 @end
 
 NS_ASSUME_NONNULL_END

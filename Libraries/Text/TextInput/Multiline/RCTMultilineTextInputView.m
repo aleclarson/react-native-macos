@@ -10,6 +10,7 @@
 #import "RCTMultilineTextInputView.h"
 
 #import <React/RCTUtils.h>
+#import <React/NSView+React.h>
 
 #import "RCTUITextView.h"
 
@@ -30,16 +31,33 @@
     _backedTextInputView.textColor = [NSColor blackColor];
     // This line actually removes 5pt (default value) left and right padding in UITextView.
     _backedTextInputView.textContainer.lineFragmentPadding = 0;
-//#if !TARGET_OS_TV
-//    _backedTextInputView.scrollsToTop = NO;
-//#endif
-//    _backedTextInputView.scrollEnabled = YES;
     _backedTextInputView.textInputDelegate = self;
 
-    [self addSubview:_backedTextInputView];
+    _scrollView = [[RCTTextScrollView alloc] initWithFrame:NSZeroRect];
+    _scrollView.documentView = _backedTextInputView;
+
+    [self addSubview:_scrollView];
   }
 
   return self;
+}
+
+- (void)setFrame:(NSRect)frame
+{
+  [super setFrame:frame];
+  _scrollView.frameSize = frame.size;
+}
+
+- (void)setReactBorderInsets:(NSEdgeInsets)reactBorderInsets
+{
+  [super setReactBorderInsets:reactBorderInsets];
+  _scrollView.contentInsets = self.reactCompoundInsets;
+}
+
+- (void)setReactPaddingInsets:(NSEdgeInsets)reactPaddingInsets
+{
+  [super setReactPaddingInsets:reactPaddingInsets];
+  _scrollView.contentInsets = self.reactCompoundInsets;
 }
 
 RCT_NOT_IMPLEMENTED(- (instancetype)initWithFrame:(CGRect)frame)
@@ -52,38 +70,59 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)coder)
 
 #pragma mark - NSScrollViewDelegate
 
-//- (void)scrollViewDidScroll:(NSScrollView *)scrollView
-//{
-//  RCTDirectEventBlock onScroll = self.onScroll;
-//
-//  if (onScroll) {
-//    CGPoint contentOffset = scrollView.contentOffset;
-//    CGSize contentSize = scrollView.contentSize;
-//    CGSize size = scrollView.bounds.size;
-//    NSEdgeInsets contentInset = scrollView.contentInset;
-//
-//    onScroll(@{
-//      @"contentOffset": @{
-//        @"x": @(contentOffset.x),
-//        @"y": @(contentOffset.y)
-//      },
-//      @"contentInset": @{
-//        @"top": @(contentInset.top),
-//        @"left": @(contentInset.left),
-//        @"bottom": @(contentInset.bottom),
-//        @"right": @(contentInset.right)
-//      },
-//      @"contentSize": @{
-//        @"width": @(contentSize.width),
-//        @"height": @(contentSize.height)
-//      },
-//      @"layoutMeasurement": @{
-//        @"width": @(size.width),
-//        @"height": @(size.height)
-//      },
-//      @"zoomScale": @(scrollView.zoomScale ?: 1),
-//    });
-//  }
-//}
+@end
+
+@implementation RCTTextScrollView
+
+- (instancetype)initWithFrame:(NSRect)frame
+{
+  if (self = [super initWithFrame:frame]) {
+    self.hasVerticalScroller = YES;
+    self.automaticallyAdjustsContentInsets = NO;
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(_didScroll)
+                                                 name:NSViewBoundsDidChangeNotification
+                                               object:self.contentView];
+  }
+
+  return self;
+}
+
+- (void)dealloc
+{
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)_didScroll
+{
+  if (self.onScroll) {
+    NSSize size = self.bounds.size;
+    NSRect contentRect = self.contentView.bounds;
+    NSEdgeInsets contentInset = self.contentInsets;
+
+    self.onScroll(@{
+      @"contentOffset": @{
+        @"x": @(contentRect.origin.x),
+        @"y": @(contentRect.origin.y)
+      },
+      @"contentInset": @{
+        @"top": @(contentInset.top),
+        @"left": @(contentInset.left),
+        @"bottom": @(contentInset.bottom),
+        @"right": @(contentInset.right)
+      },
+      @"contentSize": @{
+        @"width": @(contentRect.size.width),
+        @"height": @(contentRect.size.height)
+      },
+      @"layoutMeasurement": @{
+        @"width": @(size.width),
+        @"height": @(size.height)
+      },
+      @"zoomScale": @(1),
+    });
+  }
+}
 
 @end

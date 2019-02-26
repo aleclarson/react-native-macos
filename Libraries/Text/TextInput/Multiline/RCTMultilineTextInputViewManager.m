@@ -26,4 +26,6 @@ RCT_EXPORT_MODULE()
 RCT_REMAP_VIEW_PROPERTY(dataDetectorTypes, backedTextInputView.dataDetectorTypes, UIDataDetectorTypes)
 #endif
 
+RCT_REMAP_VIEW_PROPERTY(onScroll, backedTextInputView.scrollView.onScroll, RCTDirectEventBlock)
+
 @end
