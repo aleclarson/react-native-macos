@@ -9,8 +9,6 @@
 
 #import "RCTWindow.h"
 
-#import "RCTLog.h"
-#import "RCTEventDispatcher.h"
 #import "RCTMouseEvent.h"
 #import "RCTTouchEvent.h"
 #import "NSView+React.h"
@@ -57,12 +55,12 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithContentRect:(NSRect)contentRect styl
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(_javaScriptDidLoad:)
                                                  name:RCTJavaScriptDidLoadNotification
-                                               object:nil];
+                                               object:bridge];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(_bridgeWillReload:)
                                                  name:RCTBridgeWillReloadNotification
-                                               object:nil];
+                                               object:bridge];
   }
 
   return self;
