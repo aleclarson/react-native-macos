@@ -65,6 +65,7 @@
 		70DB42082225E4470019CAF9 /* NSLabel.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 705EDE4422138919000CAA67 /* NSLabel.h */; };
 		70DB42092225E4470019CAF9 /* NSValue+CoreGraphics.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 705EDE3E22137BE7000CAA67 /* NSValue+CoreGraphics.h */; };
 		70DB420A2225E4470019CAF9 /* NSFont+LineHeight.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 705EDE3B221378CC000CAA67 /* NSFont+LineHeight.h */; };
+		70DB420B2225E4470019CAF9 /* NSBezierPath+CGPath.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 705EDE2E22132863000CAA67 /* NSBezierPath+CGPath.h */; };
 		70DB420C2225E4470019CAF9 /* NSText+Editing.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 70DB42042225CD340019CAF9 /* NSText+Editing.h */; };
 		70F43BF82214FEFE004F240F /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70F43BF72214FEFE004F240F /* AppKit.framework */; };
 /* End PBXBuildFile section */
@@ -79,6 +80,7 @@
 				70DB42082225E4470019CAF9 /* NSLabel.h in Copy Headers */,
 				70DB42092225E4470019CAF9 /* NSValue+CoreGraphics.h in Copy Headers */,
 				70DB420A2225E4470019CAF9 /* NSFont+LineHeight.h in Copy Headers */,
+				70DB420B2225E4470019CAF9 /* NSBezierPath+CGPath.h in Copy Headers */,
 				70DB420C2225E4470019CAF9 /* NSText+Editing.h in Copy Headers */,
 				70DB42072225E42F0019CAF9 /* RCTFieldEditor.h in Copy Headers */,
 				5956B160200FF324008D9D16 /* RCTBaseTextShadowView.h in Copy Headers */,
