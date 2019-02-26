@@ -24,7 +24,7 @@
 @implementation RCTBaseTextInputView {
   __weak RCTBridge *_bridge;
   __weak RCTEventDispatcher *_eventDispatcher;
-  BOOL _hasInputAccesoryView;
+//  BOOL _hasInputAccesoryView;
   NSString *_Nullable _predictedText;
   NSInteger _nativeEventCount;
   NSLabel *_placeholderView;
