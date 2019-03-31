@@ -65,7 +65,6 @@ const ReactNative = {
   get ActionSheetIOS() { return require('ActionSheetIOS'); },
   get Alert() { return require('Alert'); },
   get AlertIOS() { return require('AlertIOS'); },
-  get Animated() { return require('Animated'); },
   get AppRegistry() { return require('AppRegistry'); },
   get AppState() { return require('AppState'); },
   get AsyncStorage() { return require('AsyncStorage'); },
